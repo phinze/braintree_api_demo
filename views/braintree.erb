@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cloud.github.com/downloads/braintree/braintree_client_side_encryption/braintree-1.1.1.min.js"></script>
+  </head>
+  <body>
+    <h1>Braintree!</h1>
+
+    <form action="/" method="POST" id="payment-form">
+      <div class="form-row">
+        <label>Card Number</label>
+        <input type="text" size="20" autocomplete="off" id="number" />
+      </div>
+      <div class="form-row">
+        <label>CVC</label>
+        <input type="text" size="4" autocomplete="off" id="cvv" />
+      </div>
+      <div class="form-row">
+        <label>Expiration (MM/YYYY)</label>
+        <input type="text" size="2" id="month" />
+        <span> / </span>
+        <input type="text" size="4" id="year" />
+      </div>
+      <button type="submit" class="submit-button">Submit Payment</button>
+    </form>
+
+    <script type="text/javascript">
+      var clientSideEncryptionKey = 'MIIBCgKCAQEA0ld6Oi/qDwDdrljK1PKTBW3Dw1GTNB3iITGa9gVsZokmJphcv3sPjMNiEttt7plsADyEoRsAhJnnrmElvjfBzOvRPpeYEp13j+ko9WptQysDgGLeTG4QuwclLCMIcxklePi15DgYCZ+vSx140rC8ZRVWijm73icZrLWeltY+Kvs/NM6+9vJw1bIzY9DDiHD8pVPeNiUYi5MmS6EwrfQiCNsvuidVhVHuDyJHsDiZi+PkhzBIb9r1ynY7ZlsV8J1gVAzJzwmRya7r2uNI+rykgejG+XQ14fTdzjPvOHZBDIQ1bR0lSzww52yBsxCR7pYjEK8FahbOWd8eTGUmKCpb3QIDAQAB';
+      var braintree = Braintree.create(clientSideEncryptionKey);
+      $(document).ready(function() {
+        $('#payment-form').submit(function(event) {
+          $('.submit-button').attr('disabled', 'disabled');
+          var encryptedNumber = braintree.encrypt($('#number').val());
+          var encryptedCvv = braintree.encrypt($('#cvv').val());
+          var encryptedMonth = braintree.encrypt($('#month').val());
+          var encryptedYear = braintree.encrypt($('#year').val());
+          var form$ = $('#payment-form');
+          form$.append("<input type='hidden' name='number' value='" + encryptedNumber + "'/>");
+          form$.append("<input type='hidden' name='cvv' value='" + encryptedCvv + "'/>");
+          form$.append("<input type='hidden' name='month' value='" + encryptedMonth + "'/>");
+          form$.append("<input type='hidden' name='year' value='" + encryptedYear + "'/>");
+          form$.get(0).submit();
+        });
+      });
+    </script>
+  </body>
+</html>
