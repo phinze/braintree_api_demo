@@ -7,7 +7,7 @@ working with a Ruby web application.
 
 It's pretty simple:
 
-    git@github.com:phinze/braintree_api_demo.git
+    git clone https://github.com/phinze/braintree_api_demo.git
     cd braintree_api_demo
     bundle install
     shotgun app.rb
