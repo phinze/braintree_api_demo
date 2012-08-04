@@ -13,7 +13,15 @@ get '/' do
 end
 
 post '/' do
-  result = Braintree::Transaction.sale(:amount => "1000.00", :credit_card => {:number => params[:number], :cvv => params[:cvv], :expiration_month => params[:month], :expiration_year => params[:year]})
+  result = Braintree::Transaction.sale(
+    :amount => "1000.00",
+    :credit_card => {
+      :number => params[:number],
+      :cvv => params[:cvv],
+      :expiration_month => params[:month],
+      :expiration_year => params[:year]
+    }
+  )
 
   erb :braintree_response, :locals => {:result => result}
 end
