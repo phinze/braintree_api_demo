@@ -17,9 +17,8 @@ post '/' do
     :amount => "1000.00",
     :credit_card => {
       :number => params[:number],
+      :expiration_date => params[:expiration_date],
       :cvv => params[:cvv],
-      :expiration_month => params[:month],
-      :expiration_year => params[:year]
     }
   )
 

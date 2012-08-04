@@ -3,7 +3,10 @@
     <h1>Braintree Response!</h1>
     <p>Success: <%= result.success? %></p>
     <% if result.transaction %>
+      <p>Transaction ID: <%= result.transaction.id %></p>
       <p>Transaction Status: <%= result.transaction.status %></p>
+    <% elsif result.message %>
+      <p>Result message: <%= result.message %></p>
     <% end %>
   </body>
 </html>
